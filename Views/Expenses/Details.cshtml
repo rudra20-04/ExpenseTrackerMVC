@@ -1,0 +1,25 @@
+@model ExpenseTracker.Models.Expense
+
+@{
+    ViewData["Title"] = "Expense Details";
+}
+
+<h2>Expense Details</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Title</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+
+        <dt class="col-sm-2">Amount</dt>
+        <dd class="col-sm-10">@Model.Amount</dd>
+
+        <dt class="col-sm-2">Date</dt>
+        <dd class="col-sm-10">@Model.Date.ToShortDateString()</dd>
+
+        <dt class="col-sm-2">Category</dt>
+        <dd class="col-sm-10">@Model.Category?.Name</dd>
+    </dl>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>

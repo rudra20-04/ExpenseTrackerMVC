@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var categoryTotals = ViewBag.CategoryTotals as IEnumerable<dynamic> ?? new List<dynamic>();
+}
+
+<div class="container">
+    <h2 class="mb-4">Dashboard Overview</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card text-center p-3">
+                <h5>Total Income</h5>
+                <h3 class="text-success">₹@ViewBag.TotalIncome</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center p-3">
+                <h5>Total Expense</h5>
+                <h3 class="text-danger">₹@ViewBag.TotalExpense</h3>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mb-3">Expenses by Category</h4>
+
+    @if (!categoryTotals.Any())
+    {
+        <p>No expense data available.</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Category</th>
+                    <th>Total (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in categoryTotals)
+                {
+                    <tr>
+                        <td>@item.Category</td>
+                        <td>@item.Total</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

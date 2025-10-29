@@ -1,0 +1,39 @@
+@model IEnumerable<ExpenseTracker.Models.Income>
+
+@{
+    ViewData["Title"] = "Incomes";
+}
+
+<h2>Incomes</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Add New Income</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Source</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var income in Model)
+        {
+            <tr>
+                <td>@income.Source</td>
+                <td>@income.Amount</td>
+                <td>@income.Date.ToShortDateString()</td>
+                <td>@income.Description</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@income.Id" class="btn btn-sm btn-warning">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@income.Id" class="btn btn-sm btn-info">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@income.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

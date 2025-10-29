@@ -1,0 +1,98 @@
+@{
+    ViewData["Title"] = "Reports";
+    var data = Model;
+}
+
+<h2>Financial Report</h2>
+
+<div class="mb-4">
+    <p><strong>Total Income:</strong> @data.TotalIncome</p>
+    <p><strong>Total Expense:</strong> @data.TotalExpense</p>
+    <p><strong>Balance:</strong> @data.Balance</p>
+</div>
+
+<hr />
+
+<h3>Income Details</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Source</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in data.Incomes)
+        {
+            <tr>
+                <td>@i.Source</td>
+                <td>@i.Amount</td>
+                <td>@i.Date.ToShortDateString()</td>
+                <td>@i.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Expense Details</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var e in data.Expenses)
+        {
+            <tr>
+                <td>@e.Category</td>
+                <td>@e.Amount</td>
+                <td>@e.Date.ToShortDateString()</td>
+                <td>@e.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+
+<h3>Visual Summary</h3>
+<canvas id="financialChart" width="400" height="200"></canvas>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expense', 'Balance'],
+                datasets: [{
+                    label: 'Financial Overview',
+                    data: [@data.TotalIncome, @data.TotalExpense, @data.Balance],
+                    backgroundColor: ['#28a745', '#dc3545', '#007bff']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    title: {
+                        display: true,
+                        text: 'Income vs Expense vs Balance'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
